@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "artemis.fullname" . }}
+  labels:
+    {{- include "artemis.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.artemis.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "artemis.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.artemis.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "artemis.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.artemis.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.artemis.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.artemis.securityContext | nindent 12 }}
+          image: "{{ .Values.artemis.image.repository }}{{ .Values.artemis.image.name }}:{{ .Values.artemisVersion | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.artemis.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.artemis.resources | nindent 12 }}
+      {{- with .Values.artemis.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.artemis.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.artemis.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
