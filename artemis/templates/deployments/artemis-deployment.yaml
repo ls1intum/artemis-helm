@@ -9,6 +9,13 @@ spec:
   selector:
     matchLabels:
       {{- include "artemis.selectorLabels" . | nindent 6 }}
+
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+
   template:
     metadata:
       {{- with .Values.artemis.podAnnotations }}
@@ -22,26 +29,28 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      securityContext:
-        {{- toYaml .Values.artemis.podSecurityContext | nindent 8 }}
+      securityContext: {}
+      restartPolicy: Always
       containers:
         - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.artemis.securityContext | nindent 12 }}
           image: "{{ .Values.artemis.image.repository }}{{ .Values.artemis.image.name }}:{{ .Values.artemisVersion | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.artemis.image.pullPolicy }}
+
+          envFrom:
+            - configMapRef:
+                name: artemis-app
+                optional: false
+            - configMapRef:
+                name: application-config
+                optional: false
+            - secretRef:
+                name: artemis-secrets
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          securityContext:
+            {{- toYaml .Values.artemis.podSecurityContext | nindent 14 }}
           resources:
             {{- toYaml .Values.artemis.resources | nindent 12 }}
       {{- with .Values.artemis.nodeSelector }}
@@ -56,3 +65,23 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
+      initContainers:
+        - name: init-ds
+          image: busybox:latest
+          command:
+              - '/bin/sh'
+              - '-c'
+              - |
+                  while true
+                  do
+                    rt=$(nc -z -w 1 artemis-mysql 3306)
+                    if [ $? -eq 0 ]; then
+                      echo "DB is UP"
+                      break
+                    fi
+                    echo "DB is not yet reachable;sleep for 10s before retry"
+                    sleep 10
+                  done
+
+      #TODO: Volumes
