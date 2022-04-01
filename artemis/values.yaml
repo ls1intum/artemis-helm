@@ -3,6 +3,13 @@
 # Sepcify the Artemis verion - This value is used as docker image tag, so also "pr-1234" is a valid value here. See https://github.com/ls1intum/Artemis/pkgs/container/artemis/versions
 artemisVersion: "5.5.7"
 
+application: 
+  userManagement: 
+    internalAdmin: 
+      # Base64 encoded username and password
+      #username: 
+      password:
+
 # Configuration for the artemis application server - This abstraction layer is introduced to support the planned micro-service architecture in the future. 
 artemis:
   # Currently we only support 1 replica of artemis. This will change in the future
