@@ -1,12 +1,14 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: artemis
+  name: {{ .Values.artemis.volumes.name }}
 spec:
+  {{- with .Values.artemis.volumes.accessModes }}
   accessModes:
-  - ReadWriteOnce
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   resources:
     requests:
-      storage: 3Gi
+      storage: {{ .Values.artemis.volumes.size }}
   storageClassName: longhorn
   volumeMode: Filesystem

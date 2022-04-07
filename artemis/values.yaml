@@ -47,6 +47,15 @@ artemis:
     #    hosts:
     #      - chart-example.local
 
+  volumes: 
+    name: artemis-pvc
+    accessModes: 
+      - ReadWriteOnce
+    size: 3Gi 
+    storageClassName:
+    mountPath: "/artemisdata"
+
+
   resources: {}
 
   nodeSelector: {}

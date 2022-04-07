@@ -5,10 +5,10 @@ metadata:
 data:
   SPRING_DATASOURCE_URL: jdbc:mysql://artemis-mysql/artemis?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
   SPRING_PROFILES_ACTIVE: prod,bamboo,bitbucket,jira,artemis,scheduling
-  artemis.file-upload-path: /artemisdata/uploads
-  artemis.submission-export-path: /artemisdata/exports
-  artemis.repo-clone-path: /artemisdata/repos
-  artemis.repo-download-clone-path: /artemisdata/repos-download
+  artemis.file-upload-path: {{ .Values.artemis.volumes.mountPath }}/uploads
+  artemis.submission-export-path: {{ .Values.artemis.volumes.mountPath }}/exports
+  artemis.repo-clone-path: {{ .Values.artemis.volumes.mountPath }}/repos
+  artemis.repo-download-clone-path: {{ .Values.artemis.volumes.mountPath }}/repos-download
   {{- with (first .Values.artemis.ingress.hosts) }}
   server.url: http://{{ .host }}
   {{- end }}
