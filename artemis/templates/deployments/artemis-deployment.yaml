@@ -49,6 +49,10 @@ spec:
             {{- toYaml .Values.artemis.podSecurityContext | nindent 14 }}
           resources:
             {{- toYaml .Values.artemis.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: {{ .Values.artemis.volumes.mountPath }} 
+              name: artemis-volume
+
       {{- with .Values.artemis.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -80,4 +84,7 @@ spec:
                     sleep 10
                   done
 
-      #TODO: Volumes
+      volumes:
+      - name: artemis-volume
+        persistentVolumeClaim:
+          claimName: {{ .Values.artemis.volumes.name }}
