@@ -22,6 +22,23 @@ application:
       adminGroupName: ""
 
 
+  versioncontrol: 
+
+    # Configure version control provider. Valid values are "" and "bitbucket"
+    provider: ""
+
+    defaultBranch: main 
+
+    bitbucket: 
+    # Bitbucket is only supported in conjungtion with jira usermanagement 
+      url: 
+      sshCloneUrl: 
+      token: 
+
+
+
+
+
 # Configuration for the artemis application server - This abstraction layer is introduced to support the planned micro-service architecture in the future. 
 artemis:
   # Currently we only support 1 replica of artemis. This will change in the future
