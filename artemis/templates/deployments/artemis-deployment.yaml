@@ -27,6 +27,11 @@ spec:
     spec:
       securityContext: {}
       restartPolicy: Always
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.artemis.image.repository }}{{ .Values.artemis.image.name }}:{{ .Values.artemisVersion | default .Chart.AppVersion }}"
