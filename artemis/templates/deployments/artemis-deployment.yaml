@@ -25,10 +25,6 @@ spec:
       labels:
         {{- include "artemis.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.artemis.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       securityContext: {}
       restartPolicy: Always
       containers:

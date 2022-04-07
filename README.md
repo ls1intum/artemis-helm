@@ -3,15 +3,34 @@ Helm chart for Artemis - Early Development
 
 # Installation 
 
-## Install local helm chart for development: 
+## Install Chart via Repository 
+
+```bash
+helm repo add artemis https://ls1intum.github.io/artemis-helm/
+helm repo ls 
+```
+
+Create a `values.yml` file with all the desired artemis configurations. See `./artemis/values.yaml` for all options.
+
+```bash
+helm upgrade --install artemis-test artemis/artemis \
+        --create-namespace \
+        --namespace $NAMESPACE \
+        -f $VALUESFILE
+```
+
+## Install Chart for development: 
 Prerequisits: 
 - Working kubernetes cluster
 - Helm and `kubectl` installed on local machine 
 - Working `kubeconfig` for `kubectl`
 - Helm `artemis-values.yml` file 
 
+Change directory to `./artemis/`
+
 Install (and upgrade) helm release `artemis-test` from `.`:
-```
+
+```bash
 helm upgrade --install artemis-test . \
         --debug \
         --create-namespace \
