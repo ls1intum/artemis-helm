@@ -36,6 +36,19 @@ application:
       token: 
 
 
+  continuousIntegration: 
+
+    # Configure CI provider. Valid values are "" and "bamboo"
+    provider: ""
+
+    bamboo: 
+      # Bamboo is only supported in conjungtion with jira usermanagement 
+      url:
+      accessToken: 
+      notificationToken: 
+      applicationLinkName: 
+      
+
 
 
 
