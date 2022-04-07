@@ -6,9 +6,21 @@ artemisVersion: "5.5.7"
 application: 
   userManagement: 
     internalAdmin: 
-      # Base64 encoded username and password
       username: 
       password:
+   
+    # Set true if external user management shoule be enabled
+    useExternal: false
+
+    # Configure the user management provider. Valid values are "" and "jira"
+    provider: ""
+
+    jira: 
+      url: ""
+      username: ""
+      password: ""
+      adminGroupName: ""
+
 
 # Configuration for the artemis application server - This abstraction layer is introduced to support the planned micro-service architecture in the future. 
 artemis:
