@@ -1,0 +1,423 @@
+Release "artemis-test" has been upgraded. Happy Helming!
+NAME: artemis-test
+LAST DEPLOYED: Thu Apr  7 17:10:30 2022
+NAMESPACE: test3
+STATUS: pending-upgrade
+REVISION: 4
+USER-SUPPLIED VALUES:
+application:
+  userManagement:
+    internalAdmin:
+      password: VGhpc0lzQVRlcnJpYmxlUGFzc3dvcmQy
+      username: YWRtaW4=
+artemis:
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    hosts:
+    - host: test3.k8s-artemis-test-cluster1.ase.in.tum.de
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+    tls:
+    - hosts:
+      - test3.k8s-artemis-test-cluster1.ase.in.tum.de
+      secretName: artemis-ingress-tls
+artemisVersion: 5.7.0
+
+COMPUTED VALUES:
+application:
+  userManagement:
+    internalAdmin:
+      password: VGhpc0lzQVRlcnJpYmxlUGFzc3dvcmQy
+      username: YWRtaW4=
+    jira:
+      adminGroupName: ""
+      password: ""
+      url: ""
+      username: ""
+    provider: ""
+    useExternal: false
+artemis:
+  affinity: {}
+  image:
+    name: artemis
+    pullPolicy: Always
+    repository: ghcr.io/ls1intum/
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    className: ""
+    enabled: true
+    hosts:
+    - host: test3.k8s-artemis-test-cluster1.ase.in.tum.de
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+    tls:
+    - hosts:
+      - test3.k8s-artemis-test-cluster1.ase.in.tum.de
+      secretName: artemis-ingress-tls
+  nodeSelector: {}
+  podAnnotations: {}
+  podSecurityContext:
+    allowPrivilegeEscalation: false
+  replicaCount: 1
+  resources: {}
+  securityContext: {}
+  service:
+    port: 8080
+    type: ClusterIP
+  tolerations: []
+  volumes:
+    accessModes:
+    - ReadWriteOnce
+    mountPath: /artemisdata
+    name: artemis-pvc
+    size: 3Gi
+    storageClassName: null
+artemisVersion: 5.7.0
+
+HOOKS:
+---
+# Source: artemis/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "artemis-test-test-connection"
+  labels:
+    helm.sh/chart: artemis-0.0.1
+    app.kubernetes.io/name: artemis
+    app.kubernetes.io/instance: artemis-test
+    app.kubernetes.io/version: "5.5.7"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['artemis-test:8080']
+  restartPolicy: Never
+MANIFEST:
+---
+# Source: artemis/templates/secrets/artemis-secrets.yml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: artemis-secrets
+type: Opaque
+data:
+  
+  artemis.user-management.internal-admin.username: YWRtaW4=
+  artemis.user-management.internal-admin.password: VGhpc0lzQVRlcnJpYmxlUGFzc3dvcmQy
+  artemis.user-management.ldap.password: ""
+  artemis.version-control.password: ""
+  artemis.version-control.token: ""
+  artemis.athene.base64-secret: ""
+  artemis.continuous-integration.password: ""
+  artemis.continuous-integration.token: ""
+  artemis.lti.oauth-key: ""
+  artemis.lti.oauth-secret: ""
+---
+# Source: artemis/templates/configmaps/application-configmap.yml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: application-config
+#common configuration shared between all applications
+data:
+  application.yml: |-
+    server:
+      port: 8080
+      url: http://localhost
+      use-forward-headers: true
+    configserver:
+      name:  JHipster Registry
+      status: Connected to the JHipster Registry running in Kubernetes
+    eureka:
+      client:
+        initial-instance-info-replication-interval-seconds: 15
+        instance-info-replication-interval-seconds: 15
+        registry-fetch-interval-seconds: 15
+        fetch-registry: true
+        register-with-eureka: true
+        eureka-service-url-poll-interval-seconds: 15
+      instance:
+        lease-renewal-interval-in-seconds: 10
+        registry-default-open-for-traffic-count: 0
+    jhipster:
+      security:
+        authentication:
+          jwt:
+            base64-secret: ZmVlZDE4MjczNzA1YzI2YjllMmE1YzVmZjllYmFjYWYxYzk3NmYzNWRmOWQwNjI3YjM0NGUzZTg5MGM1ZmNhMTViMzM0YTM1YTQwZTZlYWFhNTE2ZThiYmUzYmQ5Yjk2NjY4ZA==
+  # app specific configuration
+  jhipster-registry.yml: |-
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://admin:${spring.security.user.password}@jhipster-registry-0.jhipster-registry.artemis.svc.cluster.local:8761/eureka/,http://admin:${spring.security.user.password}@jhipster-registry-1.jhipster-registry.artemis.svc.cluster.local:8761/eureka/
+---
+# Source: artemis/templates/configmaps/artemis-configmap.yml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: artemis-app
+data:
+  SPRING_DATASOURCE_URL: jdbc:mysql://artemis-mysql/artemis?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+  SPRING_PROFILES_ACTIVE: prod,bamboo,bitbucket,jira,artemis,scheduling
+  artemis.file-upload-path: /artemisdata/uploads
+  artemis.submission-export-path: /artemisdata/exports
+  artemis.repo-clone-path: /artemisdata/repos
+  artemis.repo-download-clone-path: /artemisdata/repos-download
+  server.url: http://test3.k8s-artemis-test-cluster1.ase.in.tum.de
+---
+# Source: artemis/templates/configmaps/artemis-mysql-configmap.yml
+apiVersion: v1
+data:
+  MYSQL_ROOT_PASSWORD: ""
+  MYSQL_DATABASE: "Artemis"
+  MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+kind: ConfigMap
+metadata:
+  name: artemis-mysql
+---
+# Source: artemis/templates/configmaps/artemis-usermanagement-configmap.yml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: artemis-userManagement
+data:
+---
+# Source: artemis/templates/pvc/artemis-mysql.yml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: artemis-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+  storageClassName: longhorn
+  volumeMode: Filesystem
+---
+# Source: artemis/templates/pvc/artemis.yml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: artemis-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+  storageClassName: longhorn
+  volumeMode: Filesystem
+---
+# Source: artemis/templates/services/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: artemis-test
+  labels:
+    helm.sh/chart: artemis-0.0.1
+    app.kubernetes.io/name: artemis
+    app.kubernetes.io/instance: artemis-test
+    app.kubernetes.io/version: "5.5.7"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: artemis
+    app.kubernetes.io/instance: artemis-test
+---
+# Source: artemis/templates/deployments/artemis-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: artemis-test
+  labels:
+    helm.sh/chart: artemis-0.0.1
+    app.kubernetes.io/name: artemis
+    app.kubernetes.io/instance: artemis-test
+    app.kubernetes.io/version: "5.5.7"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: artemis
+      app.kubernetes.io/instance: artemis-test
+
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: artemis
+        app.kubernetes.io/instance: artemis-test
+    spec:
+      securityContext: {}
+      restartPolicy: Always
+      containers:
+        - name: artemis
+          image: "ghcr.io/ls1intum/artemis:5.7.0"
+          imagePullPolicy: Always
+
+          envFrom:
+            - configMapRef:
+                name: artemis-app
+                optional: false
+            - configMapRef:
+                name: application-config
+                optional: false
+            - secretRef:
+                name: artemis-secrets
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          securityContext:
+              allowPrivilegeEscalation: false
+          resources:
+            {}
+          volumeMounts:
+            - mountPath: /artemisdata 
+              name: artemis-volume
+
+      initContainers:
+        - name: init-ds
+          image: busybox:latest
+          command:
+              - '/bin/sh'
+              - '-c'
+              - |
+                  while true
+                  do
+                    rt=$(nc -z -w 1 artemis-mysql 3306)
+                    if [ $? -eq 0 ]; then
+                      echo "DB is UP"
+                      break
+                    fi
+                    echo "DB is not yet reachable;sleep for 10s before retry"
+                    sleep 10
+                  done
+
+      volumes:
+      - name: artemis-volume
+        persistentVolumeClaim:
+          claimName: artemis-pvc
+---
+# Source: artemis/templates/statefulsets/artemis-mysql.yml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    field.cattle.io/creatorId: user-nxxf9
+  labels:
+    cattle.io/creator: norman
+    workload.user.cattle.io/workloadselector: statefulSet-artemis-artemis-mysql
+  name: artemis-mysql
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: statefulSet-artemis-artemis-mysql
+  serviceName: artemis-mysql
+  template:
+    metadata:
+      labels:
+        workload.user.cattle.io/workloadselector: statefulSet-artemis-artemis-mysql
+    spec:
+      containers:
+      - args:
+        - mysqld
+        - --lower_case_table_names=1
+        - --skip-ssl
+        - --character_set_server=utf8mb4
+        - --collation-server=utf8mb4_unicode_ci
+        - --explicit_defaults_for_timestamp
+        envFrom:
+        - configMapRef:
+            name: artemis-mysql
+        image: mysql:8.0.27
+        imagePullPolicy: IfNotPresent
+        name: artemis-mysql
+        ports:
+        - containerPort: 3306
+          name: 3306tcp2
+          protocol: TCP
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        volumeMounts:
+        - mountPath: /var/lib/mysql/
+          name: artemis-data
+      dnsConfig: {}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: artemis-data
+        persistentVolumeClaim:
+          claimName: artemis-data
+  updateStrategy:
+    type: RollingUpdate
+---
+# Source: artemis/templates/ingresses/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: artemis-test
+  labels:
+    helm.sh/chart: artemis-0.0.1
+    app.kubernetes.io/name: artemis
+    app.kubernetes.io/instance: artemis-test
+    app.kubernetes.io/version: "5.5.7"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+spec:
+  tls:
+    - hosts:
+        - "test3.k8s-artemis-test-cluster1.ase.in.tum.de"
+      secretName: artemis-ingress-tls
+  rules:
+    - host: "test3.k8s-artemis-test-cluster1.ase.in.tum.de"
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: artemis-test
+                port:
+                  number: 8080
+
+NOTES:
+1. Get the application URL by running these commands:
+  https://test3.k8s-artemis-test-cluster1.ase.in.tum.de/
