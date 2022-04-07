@@ -5,6 +5,6 @@ metadata:
 data:
   {{- if eq .Values.application.continuousIntegration.provider "bamboo" }}
   artemis.continuous-integration.url: {{ required "Bamboo url is required" .Values.application.continuousIntegration.bamboo.url | quote }}
-  artemis.continuous-integration.applicationLinkName: {{ required "Bitbucket Application Link Name is required" .Values.application.continuousIntegration.bamboo.applicationLinkName | quote }}
+  artemis.continuous-integration.vcs-application-link-name: {{ required "Bitbucket Application Link Name is required" .Values.application.continuousIntegration.bamboo.applicationLinkName | quote }}
   artemis.continuous-integration.empty-commit-necessary: "true"
   {{- end }}
