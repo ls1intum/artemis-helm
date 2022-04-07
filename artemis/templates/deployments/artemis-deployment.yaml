@@ -38,6 +38,8 @@ spec:
             - configMapRef:
                 name: artemis-vcs-configmap
             - configMapRef:
+                name: artemis-ci-configmap
+            - configMapRef:
                 name: artemis-app
                 optional: false
             - configMapRef:
@@ -47,6 +49,8 @@ spec:
                 name: artemis-usermanagement-secrets
             - secretRef:
                 name: artemis-vcs-secrets
+            - secretRef:
+                name: artemis-ci-secrets
             - secretRef:
                 name: artemis-secrets
           ports:
