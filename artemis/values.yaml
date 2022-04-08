@@ -5,6 +5,8 @@ artemisVersion: "5.5.7"
 
 application: 
   userManagement: 
+
+    # Initial Artemis admin account
     internalAdmin: 
       username: 
       password:
@@ -19,20 +21,25 @@ application:
       url: ""
       username: ""
       password: ""
+
+      # The specified Jira group will have administrator access to Artemis
       adminGroupName: ""
 
 
   versioncontrol: 
-
     # Configure version control provider. Valid values are "" and "bitbucket"
     provider: ""
 
     defaultBranch: main 
 
-    bitbucket: 
     # Bitbucket is only supported in conjungtion with jira usermanagement 
+    bitbucket: 
       url: 
+
+      # SSH clone url - Make sure that this url ends with a /
       sshCloneUrl: 
+
+      # Artemis user access token in Bitbucket
       token: 
 
 
