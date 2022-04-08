@@ -9,6 +9,8 @@ data:
   artemis.submission-export-path: {{ .Values.artemis.volumes.mountPath }}/exports
   artemis.repo-clone-path: {{ .Values.artemis.volumes.mountPath }}/repos
   artemis.repo-download-clone-path: {{ .Values.artemis.volumes.mountPath }}/repos-download
+  eureka.client.enabled: "true"
   {{- with (first .Values.artemis.ingress.hosts) }}
   server.url: https://{{ .host }}
   {{- end }}
+  EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://admin:${spring.security.user.password}@{{ .Values.registry.service.name }}:{{ .Values.registry.service.port }}/eureka/
