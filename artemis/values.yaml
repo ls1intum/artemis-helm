@@ -42,16 +42,23 @@ application:
       # Artemis user access token in Bitbucket
       token: 
 
+  registry: 
+    jwt: 
+    password: "SuperSecure"
 
   continuousIntegration: 
 
     # Configure CI provider. Valid values are "" and "bamboo"
     provider: ""
 
+    # Bamboo is only supported in conjungtion with jira usermanagement 
     bamboo: 
-      # Bamboo is only supported in conjungtion with jira usermanagement 
       url:
+
+      # Access token for the Artemis bamboo user 
       accessToken: 
+
+      # Token used by the Artemis Bamboo plugin to send results to Artemis 
       notificationToken: 
       applicationLinkName: 
       
@@ -113,3 +120,20 @@ artemis:
 
   affinity: {}
 
+
+registry:
+  replicaCount: 1
+
+  image:
+    # Leave empty to use the official image
+    repository: ""
+    name: "jhipster/jhipster-registry"
+    version: "v7.3.0"
+    pullPolicy: Always
+
+      #podAnnotations: {}
+
+  service: 
+    name: jhipster-registry-service
+    type: ClusterIP
+    port: 8761
