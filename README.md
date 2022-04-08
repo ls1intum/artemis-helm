@@ -51,13 +51,18 @@ helm upgrade --install artemis-test . \
 - [ ] All important Artemis configurations (`application.yml` and `application-prod.yml`) as Helm Values ([See Artemis ansible collectioni](https://github.com/ls1intum/artemis-ansible-collection/blob/main/roles/artemis/defaults/main.yml))
   - [ ] Artemis Server URL
   - [ ] external services 
-    - [ ] User Management
+    - [x] User Management
     - [ ] Version Control
+      - [x] Bitbucket
+      - [ ] Gitlab
     - [ ] Continuous Integration
+      - [x] Bamboo
+      - [ ] Jenkins
     - [ ] LTI
     - [ ] Athene 
     - [ ] Apollon
     - [ ] Mail
+    - [ ] LDAP
   - [ ] Registry
   - [ ] Broker
   - [ ] Database
