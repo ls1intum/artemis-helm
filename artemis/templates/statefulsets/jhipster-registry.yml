@@ -36,6 +36,13 @@ spec:
               containerPort: 8761
           envFrom:
           - configMapRef:
-              name: jhipster-registry-configmap
+              name: jhipster-registry-env-configmap
           - secretRef:
               name: jhipster-registry-secrets
+          volumeMounts:
+            - name: config-volume
+              mountPath: /central-config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: jhipster-registry-configmap
