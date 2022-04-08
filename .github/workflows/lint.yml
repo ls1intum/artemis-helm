@@ -17,5 +17,5 @@ jobs:
         with:
           version: v3.7.1
 
-      - name: Configure Git
+      - name: Run helm linter
         run: cd artemis && helm lint --strict
