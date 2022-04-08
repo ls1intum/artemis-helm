@@ -49,7 +49,7 @@ helm upgrade --install artemis-test . \
   - [x] Shared Persistent Volume
 - [x] Bundled Database Deployment 
 - [ ] All important Artemis configurations (`application.yml` and `application-prod.yml`) as Helm Values ([See Artemis ansible collectioni](https://github.com/ls1intum/artemis-ansible-collection/blob/main/roles/artemis/defaults/main.yml))
-  - [ ] Artemis Server URL
+  - [x] Artemis Server URL
   - [ ] external services 
     - [x] User Management
     - [ ] Version Control
@@ -63,7 +63,7 @@ helm upgrade --install artemis-test . \
     - [ ] Apollon
     - [ ] Mail
     - [ ] LDAP
-  - [ ] Registry
+  - [x] Registry
   - [ ] Broker
   - [ ] Database
     - [ ] External Database
@@ -71,16 +71,17 @@ helm upgrade --install artemis-test . \
     - [ ] Database User 
     - [ ] Database Password
   - [ ] Artemis Config
-    - [ ] Internal Admin User and Password
+    - [x] Internal Admin User and Password
     - [ ] Artemis git SSH key
     - [ ] Test Server Flag 
     - [ ] Artemis Email 
     - [ ] Login Info text/Password Reset 
-- [ ] jHipster Registry Deployment
+- [x] jHipster Registry Deployment
 - [ ] Message Broker Deployment 
   - [ ] Single Broker deployment 
   - [ ] HA Broker deployment 
 - [ ] Scalable Artemis Deployment 
+  - [ ] Find a way to have the `scheduling` spring profile in only one pod 
 - [ ] Readiness and liveness probes 
 - [ ] Artemis wait on db/registry 
 - [ ] Rolling Update for Artemis Deployment
