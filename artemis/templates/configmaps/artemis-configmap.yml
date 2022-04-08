@@ -10,5 +10,5 @@ data:
   artemis.repo-clone-path: {{ .Values.artemis.volumes.mountPath }}/repos
   artemis.repo-download-clone-path: {{ .Values.artemis.volumes.mountPath }}/repos-download
   {{- with (first .Values.artemis.ingress.hosts) }}
-  server.url: http://{{ .host }}
+  server.url: https://{{ .host }}
   {{- end }}
