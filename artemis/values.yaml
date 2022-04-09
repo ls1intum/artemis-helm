@@ -63,7 +63,14 @@ application:
       applicationLinkName: 
       
 
+  registry: 
+    jwt: 
+    password: "SuperSecure"
 
+  # ActiveMQ message broker configuration 
+  broker: 
+    username: "brokeruser"
+    password: "brokerpassword"
 
 
 # Configuration for the artemis application server - This abstraction layer is introduced to support the planned micro-service architecture in the future. 
@@ -120,7 +127,6 @@ artemis:
 
   affinity: {}
 
-
 registry:
   replicaCount: 1
 
@@ -137,3 +143,16 @@ registry:
     name: jhipster-registry-service
     type: ClusterIP
     port: 8761
+
+broker: 
+
+  image: 
+    repository: "ghcr.io/ls1intum/"
+    name: "activemq-broker-docker-adoptopenjdk-11"
+    version: "2.21.0"
+    pullPolicy: Always
+
+  service:
+    name: "activemq-broker"
+    type: ClusterIP
+    port: 61616

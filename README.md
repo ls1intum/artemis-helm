@@ -64,7 +64,6 @@ helm upgrade --install artemis-test . \
     - [ ] Mail
     - [ ] LDAP
   - [x] Registry
-  - [ ] Broker
   - [ ] Database
     - [ ] External Database
     - [ ] Database Name
@@ -78,7 +77,7 @@ helm upgrade --install artemis-test . \
     - [ ] Login Info text/Password Reset 
 - [x] jHipster Registry Deployment
 - [ ] Message Broker Deployment 
-  - [ ] Single Broker deployment 
+  - [x] Single Broker deployment 
   - [ ] HA Broker deployment 
 - [ ] Scalable Artemis Deployment 
   - [ ] Find a way to have the `scheduling` spring profile in only one pod 

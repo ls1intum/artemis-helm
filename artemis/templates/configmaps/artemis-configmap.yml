@@ -12,6 +12,7 @@ data:
   eureka.client.enabled: "true"
   eureka.instance.instanceId: "${HOSTNAME}"
   spring.hazelcast.interface: "${HOSTNAME}"
+  spring.security.websocket.broker.addresses: "{{ .Values.broker.service.name }}:{{ .Values.broker.service.port }}"
   {{- with (first .Values.artemis.ingress.hosts) }}
   server.url: https://{{ .host }}
   {{- end }}
