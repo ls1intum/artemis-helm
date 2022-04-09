@@ -5,6 +5,8 @@ artemisVersion: "5.5.7"
 
 application: 
   userManagement: 
+
+    # Initial Artemis admin account
     internalAdmin: 
       username: 
       password:
@@ -19,37 +21,56 @@ application:
       url: ""
       username: ""
       password: ""
+
+      # The specified Jira group will have administrator access to Artemis
       adminGroupName: ""
 
 
   versioncontrol: 
-
     # Configure version control provider. Valid values are "" and "bitbucket"
     provider: ""
 
     defaultBranch: main 
 
-    bitbucket: 
     # Bitbucket is only supported in conjungtion with jira usermanagement 
+    bitbucket: 
       url: 
+
+      # SSH clone url - Make sure that this url ends with a /
       sshCloneUrl: 
+
+      # Artemis user access token in Bitbucket
       token: 
 
+  registry: 
+    jwt: 
+    password: "SuperSecure"
 
   continuousIntegration: 
 
     # Configure CI provider. Valid values are "" and "bamboo"
     provider: ""
 
+    # Bamboo is only supported in conjungtion with jira usermanagement 
     bamboo: 
-      # Bamboo is only supported in conjungtion with jira usermanagement 
       url:
+
+      # Access token for the Artemis bamboo user 
       accessToken: 
+
+      # Token used by the Artemis Bamboo plugin to send results to Artemis 
       notificationToken: 
       applicationLinkName: 
       
 
+  registry: 
+    jwt: 
+    password: "SuperSecure"
 
+  # ActiveMQ message broker configuration 
+  broker: 
+    username: "brokeruser"
+    password: "brokerpassword"
 
 
 # Configuration for the artemis application server - This abstraction layer is introduced to support the planned micro-service architecture in the future. 
@@ -92,7 +113,7 @@ artemis:
   volumes: 
     name: artemis-pvc
     accessModes: 
-      - ReadWriteOnce
+      - ReadWriteMany
     size: 3Gi 
     storageClassName:
     mountPath: "/artemisdata"
@@ -106,3 +127,32 @@ artemis:
 
   affinity: {}
 
+registry:
+  replicaCount: 1
+
+  image:
+    # Leave empty to use the official image
+    repository: ""
+    name: "jhipster/jhipster-registry"
+    version: "v7.3.0"
+    pullPolicy: Always
+
+      #podAnnotations: {}
+
+  service: 
+    name: jhipster-registry-service
+    type: ClusterIP
+    port: 8761
+
+broker: 
+
+  image: 
+    repository: "ghcr.io/ls1intum/"
+    name: "activemq-broker-docker-adoptopenjdk-11"
+    version: "2.21.0"
+    pullPolicy: Always
+
+  service:
+    name: "activemq-broker"
+    type: ClusterIP
+    port: 61616

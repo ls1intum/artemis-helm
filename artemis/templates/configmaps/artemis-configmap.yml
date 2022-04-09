@@ -4,11 +4,16 @@ metadata:
   name: artemis-app
 data:
   SPRING_DATASOURCE_URL: jdbc:mysql://artemis-mysql/artemis?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-  SPRING_PROFILES_ACTIVE: prod,bamboo,bitbucket,jira,artemis,scheduling
+  SPRING_PROFILES_ACTIVE: {{ include "artemis.springprofiles" .}},scheduling
   artemis.file-upload-path: {{ .Values.artemis.volumes.mountPath }}/uploads
   artemis.submission-export-path: {{ .Values.artemis.volumes.mountPath }}/exports
   artemis.repo-clone-path: {{ .Values.artemis.volumes.mountPath }}/repos
   artemis.repo-download-clone-path: {{ .Values.artemis.volumes.mountPath }}/repos-download
+  eureka.client.enabled: "true"
+  eureka.instance.instanceId: "${HOSTNAME}"
+  spring.hazelcast.interface: "${MY_POD_IP}"
+  spring.websocket.broker.addresses: "{{ .Values.broker.service.name }}:{{ .Values.broker.service.port }}"
   {{- with (first .Values.artemis.ingress.hosts) }}
-  server.url: http://{{ .host }}
+  server.url: https://{{ .host }}
   {{- end }}
+  EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://admin:${spring.security.user.password}@{{ .Values.registry.service.name }}:{{ .Values.registry.service.port }}/eureka/
