@@ -11,7 +11,7 @@ data:
   artemis.repo-download-clone-path: {{ .Values.artemis.volumes.mountPath }}/repos-download
   eureka.client.enabled: "true"
   eureka.instance.instanceId: "${HOSTNAME}"
-  spring.hazelcast.interface: "${HOSTNAME}"
+  spring.hazelcast.interface: "${MY_POD_IP}"
   spring.websocket.broker.addresses: "{{ .Values.broker.service.name }}:{{ .Values.broker.service.port }}"
   {{- with (first .Values.artemis.ingress.hosts) }}
   server.url: https://{{ .host }}

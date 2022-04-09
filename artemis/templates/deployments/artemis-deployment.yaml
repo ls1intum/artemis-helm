@@ -36,7 +36,12 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.artemis.image.repository }}{{ .Values.artemis.image.name }}:{{ .Values.artemisVersion | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.artemis.image.pullPolicy }}
-
+          
+          env: 
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
           envFrom:
             - configMapRef:
                 name: artemis-usermanagement-configmap
