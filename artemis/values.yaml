@@ -106,3 +106,15 @@ artemis:
 
   affinity: {}
 
+broker: 
+
+  image: 
+    repository: "ghcr.io/ls1intum/"
+    name: "activemq-broker-docker-adoptopenjdk-11"
+    version: "2.21.0"
+    pullPolicy: Always
+
+  service:
+    type: ClusterIP
+    port: 61616
+  
