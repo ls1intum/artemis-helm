@@ -60,3 +60,20 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+
+{{/*
+Generate common Artemis java spring profiles
+*/}}
+{{- define "artemis.springprofiles" -}}
+prod,artemis
+{{- if .Values.application.userManagement.provider -}}
+,{{ .Values.application.userManagement.provider }}
+{{- end }}
+{{- if .Values.application.versioncontrol.provider -}}
+,{{ .Values.application.versioncontrol.provider }}
+{{- end }}
+{{- if .Values.application.continuousIntegration.provider -}}
+,{{ .Values.application.continuousIntegration.provider }}
+{{- end }}
+{{- end }}
