@@ -42,6 +42,9 @@ application:
       # Artemis user access token in Bitbucket
       token: 
 
+  registry: 
+    jwt: 
+    password: "SuperSecure"
 
   continuousIntegration: 
 
