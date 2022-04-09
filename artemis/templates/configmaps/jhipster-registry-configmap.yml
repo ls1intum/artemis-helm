@@ -1,14 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: application-config
-#common configuration shared between all applications
+  name: jhipster-registry-configmap
 data:
   application.yml: |-
-    server:
-      port: 8080
-      url: http://localhost
-      use-forward-headers: true
     configserver:
       name:  JHipster Registry
       status: Connected to the JHipster Registry running in Kubernetes
@@ -27,10 +22,11 @@ data:
       security:
         authentication:
           jwt:
-            base64-secret: ZmVlZDE4MjczNzA1YzI2YjllMmE1YzVmZjllYmFjYWYxYzk3NmYzNWRmOWQwNjI3YjM0NGUzZTg5MGM1ZmNhMTViMzM0YTM1YTQwZTZlYWFhNTE2ZThiYmUzYmQ5Yjk2NjY4ZA==
+            # This is bad practice, but this value cannot be handed to the registry via the environment. Needs further investigation 
+            base64-secret: {{ required "Registry  JWT is required" .Values.application.registry.jwt | b64enc | quote }} 
   # app specific configuration
   jhipster-registry.yml: |-
     eureka:
       client:
         service-url:
-          defaultZone: http://admin:${spring.security.user.password}@jhipster-registry-0.jhipster-registry.artemis.svc.cluster.local:8761/eureka/,http://admin:${spring.security.user.password}@jhipster-registry-1.jhipster-registry.artemis.svc.cluster.local:8761/eureka/
+          defaultZone: http://admin:${spring.security.user.password}@{{ .Values.registry.service.name }}:{{ .Values.registry.service.port }}/eureka/

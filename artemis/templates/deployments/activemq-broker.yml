@@ -38,7 +38,3 @@ spec:
         - name: activemq-stomp
           containerPort: 61616
           protocol: TCP
-            
-            #        - name: 8161tcp81612
-            #          containerPort: 8161
-            #          protocol: TCP

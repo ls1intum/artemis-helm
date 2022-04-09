@@ -47,9 +47,6 @@ spec:
             - configMapRef:
                 name: artemis-app
                 optional: false
-            - configMapRef:
-                name: application-config
-                optional: false
             - secretRef:
                 name: artemis-usermanagement-secrets
             - secretRef:
