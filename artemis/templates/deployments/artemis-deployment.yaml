@@ -28,6 +28,8 @@ spec:
       securityContext: {}
       restartPolicy: Always
       securityContext:
+        # Make sure that the container can read and write the PVC 
+        # The Artemis executable is started with an unprivileged user (UID 1000)
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
@@ -36,7 +38,9 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.artemis.image.repository }}{{ .Values.artemis.image.name }}:{{ .Values.artemisVersion | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.artemis.image.pullPolicy }}
-          
+         
+          # We hand the pod IP to the container env here to build the hazelcast cluster. 
+          # The MY_POD_IP variable is used in the artemis configmap
           env: 
             - name: MY_POD_IP
               valueFrom:
