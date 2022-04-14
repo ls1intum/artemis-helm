@@ -3,6 +3,23 @@ entries:
   artemis:
   - apiVersion: v2
     appVersion: 5.5.7
+    created: "2022-04-14T13:35:17.574708746Z"
+    description: A Helm chart for Artemis
+    digest: 1ac2a40db1406a40735692867c7ae2f6bf464e0de74f5365789da265bfaf8b0d
+    icon: https://github.com/ls1intum/Artemis/blob/develop/src/main/resources/public/images/logo.png
+    maintainers:
+    - email: matthias.linhuber@tum.de
+      name: Matthias Linhuber
+    name: artemis
+    sources:
+    - https://github.com/ls1intum/Artemis
+    - https://github.com/ls1intum/artemis-helm
+    type: application
+    urls:
+    - https://github.com/ls1intum/artemis-helm/releases/download/artemis-0.1.0/artemis-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
+    appVersion: 5.5.7
     created: "2022-04-14T09:20:04.238139457Z"
     description: A Helm chart for Artemis
     digest: 75f47d17136def0de3696c4dd7941167b91667bf53af04b837a67ab6f682b8a1
@@ -103,4 +120,4 @@ entries:
     urls:
     - https://github.com/ls1intum/artemis-helm/releases/download/artemis-0.0.1/artemis-0.0.1.tgz
     version: 0.0.1
-generated: "2022-04-14T09:20:04.238158057Z"
+generated: "2022-04-14T13:35:17.574740245Z"
