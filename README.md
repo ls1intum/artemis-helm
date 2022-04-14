@@ -46,7 +46,7 @@ The Artemis architecture can be found [here](https://github.com/ls1intum/Artemis
 - StatefulSets
   - Database (Only for evaluation/testing/development purposes)
   - jHipster registry
-  - Artemis Application Server Scheduling Node - We use a StatefulSet for the primary Artemis Application Server instance. This instance is used forr all scheduling tasks. The scheduling node must be unique in the cluster! 
+  - Artemis Application Server Scheduling Node - We use a StatefulSet for the primary Artemis Application Server instance. This instance is used for all scheduling tasks. The scheduling node must be unique in the cluster! 
 - Deployments
   - [Message Broker](https://github.com/ls1intum/activemq-broker-docker)
   - Artemis Application Server - We use a deployment to scale the Artemis Application server. If you need more resources, you can scale out this deployment 
