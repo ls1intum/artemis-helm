@@ -116,7 +116,7 @@ artemis:
     accessModes: 
       - ReadWriteMany
     size: 3Gi 
-    storageClassName:
+    storageClassName: ""
     mountPath: "/artemisdata"
 
 
@@ -127,6 +127,11 @@ artemis:
   tolerations: []
 
   affinity: {}
+
+database: 
+  volumes:
+    size: 3Gi
+    storageClassName: ""
 
 registry:
   replicaCount: 1

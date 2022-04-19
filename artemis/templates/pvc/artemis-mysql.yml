@@ -7,6 +7,8 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 3Gi
-  storageClassName: longhorn
+      storage: {{ .Values.database.volumes.size }}
+  {{- if eq .Values.database.volumes.storageClassName "" }}
+  storageClassName: {{ .Values.database.volumes.storageClassName }}
+  {{- end }}
   volumeMode: Filesystem

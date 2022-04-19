@@ -10,5 +10,8 @@ spec:
   resources:
     requests:
       storage: {{ .Values.artemis.volumes.size }}
-  storageClassName: longhorn
+  {{- if eq .Values.artemis.volumes.storageClassName "" }}
+  storageClassName: {{ .Values.artemis.volumes.storageClassName }}
+  {{- end }}
+
   volumeMode: Filesystem
