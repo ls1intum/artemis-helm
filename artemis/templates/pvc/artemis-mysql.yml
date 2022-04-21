@@ -8,7 +8,7 @@ spec:
   resources:
     requests:
       storage: {{ .Values.database.volumes.size }}
-  {{- if eq .Values.database.volumes.storageClassName "" }}
+  {{- if ne .Values.database.volumes.storageClassName "" }}
   storageClassName: {{ .Values.database.volumes.storageClassName }}
   {{- end }}
   volumeMode: Filesystem

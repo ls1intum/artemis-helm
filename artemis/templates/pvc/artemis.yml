@@ -10,7 +10,7 @@ spec:
   resources:
     requests:
       storage: {{ .Values.artemis.volumes.size }}
-  {{- if eq .Values.artemis.volumes.storageClassName "" }}
+  {{- if ne .Values.artemis.volumes.storageClassName "" }}
   storageClassName: {{ .Values.artemis.volumes.storageClassName }}
   {{- end }}
 
