@@ -4,6 +4,11 @@ metadata:
   name: artemis-usermanagement-configmap
 data:
   {{- if and .Values.application.userManagement.useExternal ( eq .Values.application.userManagement.provider "jira") }}
+  artemis.user-management.use-external: "true"
   artemis.user-management.external.url: {{ required "Jira URL is required" .Values.application.userManagement.jira.url | quote }}
   artemis.user-management.external.admin-group-name: {{ .Values.application.userManagement.jira.adminGroupName | quote }}
+  {{- else }}
+  artemis.user-management.use-external: "false"
   {{- end }}
+
+
