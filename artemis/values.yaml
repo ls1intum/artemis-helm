@@ -29,6 +29,14 @@ application:
       # The specified Jira group will have administrator access to Artemis
       adminGroupName: ""
 
+    # the whole section is optional: whether user details (such as the registration number) can be obtained from a LDAP service
+    ldap:
+      url: ""
+      user-dn: ""
+      base: ""
+      password: ""
+      allowed-username-pattern: ""
+      # allowed-username-pattern: "^([a-z]{2}\d{2}[a-z]{3})$" # example for a TUM identifier, e.g. ab12cde
 
   versioncontrol: 
 

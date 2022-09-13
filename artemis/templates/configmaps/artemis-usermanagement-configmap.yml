@@ -10,5 +10,11 @@ data:
   {{- else }}
   artemis.user-management.use-external: "false"
   {{- end }}
-
-
+  #TODO: is the if block okay like this? based on ansible template or already if just url for instance is set?
+  {{- with .Values.application.userManagement.ldap }}
+  {{- if or .url .user_dn .base .password }}
+  artemis.user-management.ldap.url: {{ required "LDAP URL is required" .url | quote }}
+  artemis.user-management.ldap.base: {{ required "LDAP BASE is required" .base | quote }}
+  artemis.user-management.ldap.allowed-username-pattern: {{ .allowedUsernamePattern | quote }}
+  {{- end }}
+  {{- end }}
