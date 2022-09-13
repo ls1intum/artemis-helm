@@ -31,6 +31,7 @@ application:
 
     # the whole section is optional: whether user details (such as the registration number) can be obtained from a LDAP service
     ldap:
+      enabled: false
       url: ""
       user-dn: ""
       base: ""
