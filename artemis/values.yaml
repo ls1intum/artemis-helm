@@ -33,11 +33,11 @@ application:
     ldap:
       enabled: false
       url: ""
-      user-dn: ""
+      userDn: ""
       base: ""
       password: ""
-      allowed-username-pattern: ""
-      # allowed-username-pattern: "^([a-z]{2}\d{2}[a-z]{3})$" # example for a TUM identifier, e.g. ab12cde
+      allowedUsernamePattern: ''
+      # allowedUsernamePattern: '^([a-z]{2}\d{2}[a-z]{3})$'zs # example for a TUM identifier, e.g. ab12cde
 
   versioncontrol: 
 

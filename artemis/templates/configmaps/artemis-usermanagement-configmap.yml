@@ -14,6 +14,6 @@ data:
   {{- if .enabled }}
   artemis.user-management.ldap.url: {{ required "LDAP URL is required" .url | quote }}
   artemis.user-management.ldap.base: {{ required "LDAP BASE is required" .base | quote }}
-  artemis.user-management.ldap.allowed-username-pattern: {{ .allowedUsernamePattern | quote }}
+  artemis.user-management.ldap.allowed-username-pattern: {{ .allowedUsernamePattern | squote }}
   {{- end }}
   {{- end }}
