@@ -1,3 +1,6 @@
+# local development values file
+artemis/values-local.yaml
+
 # OSX thumbnails
 ._*
 
