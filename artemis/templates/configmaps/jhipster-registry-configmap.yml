@@ -23,7 +23,7 @@ data:
         authentication:
           jwt:
             # This is bad practice, but this value cannot be handed to the registry via the environment. Needs further investigation 
-            base64-secret: {{ required "Registry  JWT is required" .Values.application.registry.jwt | b64enc | quote }} 
+            base64-secret: {{ required "Registry JWT is required!" .Values.application.registry.jwt | b64enc | quote }}
   # app specific configuration
   jhipster-registry.yml: |-
     eureka:
