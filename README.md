@@ -82,7 +82,7 @@ This is a non exhaustive list! Feel free to contribute to this chart by implemen
     - [ ] Athene 
     - [ ] Apollon
     - [ ] Mail
-    - [ ] LDAP
+    - [x] LDAP
   - [x] Registry
   - [ ] Database
     - [ ] External Database

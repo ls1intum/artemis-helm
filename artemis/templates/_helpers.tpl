@@ -70,6 +70,9 @@ prod,artemis
 {{- if .Values.application.userManagement.provider -}}
 ,{{ .Values.application.userManagement.provider }}
 {{- end }}
+{{- if .Values.application.userManagement.ldap.enabled -}}
+,ldap
+{{- end }}
 {{- if .Values.application.versioncontrol.provider -}}
 ,{{ .Values.application.versioncontrol.provider }}
 {{- end }}
