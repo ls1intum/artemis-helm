@@ -17,3 +17,4 @@ data:
   server.url: https://{{ .host }}
   {{- end }}
   EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://admin:${spring.security.user.password}@{{ .Values.registry.service.name }}:{{ .Values.registry.service.port }}/eureka/
+  MANGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED: "true"
