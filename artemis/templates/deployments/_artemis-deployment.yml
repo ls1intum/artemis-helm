@@ -1,14 +1,11 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ include "artemis.fullname" . }}-lecture
-  labels:
-    {{- include "artemis.labels" . | nindent 4 }}
-spec:
+{{ define "deployment-template" }}
   replicas: {{ .Values.artemis.replicaCount }}
   selector:
     matchLabels:
       {{- include "artemis.selectorLabels" . | nindent 6 }}
+      {{- if (.Args).profile }}
+      profile: "{{ .Args.profile }}"
+      {{- end }}
 
   strategy:
     rollingUpdate:
@@ -24,6 +21,9 @@ spec:
       {{- end }}
       labels:
         {{- include "artemis.selectorLabels" . | nindent 8 }}
+        {{- if (.Args).profile }}
+        profile: "{{ .Args.profile }}"
+        {{- end }}
     spec:
       securityContext: {}
       restartPolicy: Always
@@ -44,8 +44,8 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
-            - name: SPRING_PROFILES_ACTIVE
-              value: {{ include "artemis.springprofiles" .}},lecture
+            - name: SPRING_PROFILES_INCLUDE
+              value: {{ ((.Args).profile | default "") | quote }}
           envFrom:
             - configMapRef:
                 name: artemis-usermanagement-configmap
@@ -111,3 +111,4 @@ spec:
       - name: artemis-volume
         persistentVolumeClaim:
           claimName: {{ .Values.artemis.volumes.name }}
+{{end}}

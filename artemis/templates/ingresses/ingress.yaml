@@ -43,19 +43,21 @@ spec:
         paths:
           {{- range .paths }}
           - path: {{ .path }}
-            {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
             pathType: {{ .pathType }}
-            {{- end }}
             backend:
-              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
                 name: {{ $fullName }}
                 port:
                   number: {{ $svcPort }}
-              {{- else }}
-              serviceName: {{ $fullName }}
-              servicePort: {{ $svcPort }}
-              {{- end }}
+          {{- end }}
+          {{- range $.Values.artemis.profileDeployments }}
+          - path: {{ .apiPath }}
+            pathType: "ImplementationSpecific"
+            backend:
+              service:
+                name: "{{ $fullName }}-{{ .profile }}"
+                port:
+                  number: {{ $svcPort }}
           {{- end }}
     {{- end }}
 {{- end }}
