@@ -137,6 +137,19 @@ artemis:
 
   affinity: {}
 
+  autoscaler:
+    # Wether the autoscaling should be used for the Artemis deployment
+    enabled: false
+    # Which metrics should be used for the scaling
+    metrics:
+      # Average number of users that should be targeted - the autoscaler will scale according to this metrics
+      # Note that this metrics requires the deployment of a prometheus server and a prometheus adapter
+      usersPerInstance: 100
+    # Minimum number of replicas
+    minReplicas: 1
+    # Maximum number of replicas
+    maxReplicas: 5
+
 database: 
   volumes:
     size: 3Gi

@@ -1,3 +1,4 @@
+{{- if .Values.artemis.autoscaler.enabled -}}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -9,13 +10,16 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: {{ include "artemis.fullname" . }}
-  minReplicas: 1
-  maxReplicas: 3
+  minReplicas: {{ .Values.artemis.autoscaler.minReplicas }}
+  maxReplicas: {{ .Values.artemis.autoscaler.maxReplicas }}
   metrics:
+  {{- if .Values.artemis.autoscaler.metrics.usersPerInstance }}
   - type: Pods
     pods:
       metric:
         name: artemis_instance_websocket_users
       target:
         type: AverageValue
-        averageValue: 2
+        averageValue: {{ .Values.artemis.autoscaler.metrics.usersPerInstance }}
+  {{- end }}
+{{- end }}
