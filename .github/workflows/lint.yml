@@ -18,4 +18,4 @@ jobs:
           version: v3.7.1
 
       - name: Run helm linter
-        run: cd artemis && helm dep up && helm lint --strict
+        run: cd artemis && helm dependency update && helm lint --strict
