@@ -5,7 +5,9 @@ metadata:
   labels:
     {{- include "artemis.labels" . | nindent 4 }}
 spec:
+  {{- if not .Values.artemis.autoscaler.enabled }}
   replicas: {{ .Values.artemis.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "artemis.selectorLabels" . | nindent 6 }}
