@@ -64,7 +64,13 @@ application:
     # Bamboo is only supported in conjungtion with jira usermanagement 
     bamboo: 
       url:
-      url: http://{{ tpl (.Release.Name) . }}-prometheus-server.default.svc
+
+      # Access token for the Artemis bamboo user 
+      accessToken: 
+
+      # Token used by the Artemis Bamboo plugin to send results to Artemis 
+      notificationToken: 
+      applicationLinkName: 
       
   # Configuration of the jHipster Registry
   registry: 
