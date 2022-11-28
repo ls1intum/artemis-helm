@@ -207,5 +207,5 @@ prometheus:
 prometheus-adapter:
   prometheus:
       port: 80
-      url: http://{{ tpl (.Release.Name) . }}-prometheus-server.default.svc
+      url: http://{{ tpl (.Release.Name) . }}-prometheus-server.{{ tpl (.Release.Namespace) . }}.svc
 # End Prometheus server & adapter for horizontal autoscaling
