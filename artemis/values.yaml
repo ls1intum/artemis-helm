@@ -141,7 +141,7 @@ artemis:
   affinity: {}
 
   autoscaler:
-    # Wether the autoscaling should be used for the Artemis deployment
+    # Whether the autoscaling should be used for the Artemis deployment
     enabled: false
     # IP address range that should be allowed to query metrics (must include the IP of the deployed prometheus server)
     monitoringIp: "0.0.0.0/0"
