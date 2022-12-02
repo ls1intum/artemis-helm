@@ -38,3 +38,15 @@ spec:
         - name: activemq-stomp
           containerPort: 61616
           protocol: TCP
+
+        command: ["/bin/bash", "-c", "ls -la && /opt/activemq-artemis/bin/artemis create --user ${ARTEMIS_USER} --password ${ARTEMIS_PASSWORD} --silent ${LOGIN_OPTION} ${EXTRA_ARGS} . && cp /tmp/broker.xml /var/lib/artemis-instance/etc/broker.xml && pwd && ls -la && echo test && ./bin/artemis run"]
+        # args: ["HOSTNAME", "KUBERNETES_PORT", "PATH"]
+
+        volumeMounts:
+        - name: activemq-broker-configmap
+          mountPath: /tmp/broker.xml
+          subPath: broker.xml
+      volumes:
+      - name: activemq-broker-configmap
+        configMap:
+          name: activemq-broker-configmap
