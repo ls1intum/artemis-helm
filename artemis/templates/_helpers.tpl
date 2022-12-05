@@ -66,7 +66,7 @@ Create the name of the service account to use
 Generate common Artemis java spring profiles
 */}}
 {{- define "artemis.springprofiles" -}}
-prod,artemis
+prod,artemis,decoupling
 {{- if .Values.application.userManagement.provider -}}
 ,{{ .Values.application.userManagement.provider }}
 {{- end }}

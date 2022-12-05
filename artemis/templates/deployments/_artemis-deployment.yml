@@ -33,7 +33,7 @@
         fsGroup: 1000
         fsGroupChangePolicy: "OnRootMismatch"
       containers:
-        - name: {{ .Chart.Name }}-lecture
+        - name: "{{ .Chart.Name }}-{{ ((.Args).profile | default "all") }}"
           image: "{{ .Values.artemis.image.repository }}{{ .Values.artemis.image.name }}:{{ .Values.artemisVersion | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.artemis.image.pullPolicy }}
          

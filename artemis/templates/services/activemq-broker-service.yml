@@ -10,3 +10,7 @@ spec:
       port: {{ .Values.broker.service.port }}
       protocol: TCP
       targetPort: activemq-stomp
+    - name: jms
+      port: 61613
+      protocol: TCP
+      targetPort: activemq-jms
