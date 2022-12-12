@@ -1,0 +1,11 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ include "artemis.fullname" . }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "artemis.selectorLabels" . | nindent 6 }}
+  podMetricsEndpoints:
+  - port: http
+    path: "/management/prometheus"

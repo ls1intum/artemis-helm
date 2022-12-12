@@ -143,8 +143,12 @@ artemis:
   autoscaler:
     # Wether the autoscaling should be used for the Artemis deployment
     enabled: false
+    # Wether custom prometheus + prometheus adapter instances should be deployed
+    customPrometheus: false
     # IP address range that should be allowed to query metrics (must include the IP of the deployed prometheus server)
     monitoringIp: "0.0.0.0/0"
+    # Behavior of the autoscaler
+    behavior: {}
     # Which metrics should be used for the scaling
     metrics:
       # Average number of users that should be targeted - the autoscaler will scale according to this metrics
