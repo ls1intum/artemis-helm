@@ -141,7 +141,7 @@ artemis:
   affinity: {}
 
   autoscaler:
-    # Wether the autoscaling should be used for the Artemis deployment
+    # Whether the autoscaling should be used for the Artemis deployment
     enabled: false
     # Wether custom prometheus + prometheus adapter instances should be deployed
     customPrometheus: false
