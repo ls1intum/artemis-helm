@@ -1,5 +1,5 @@
 {{- if .Values.artemis.autoscaler.enabled }}
-apiVersion: autoscaling/v2beta2
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "artemis.fullname" . }}
@@ -25,5 +25,17 @@ spec:
       target:
         type: AverageValue
         averageValue: {{ .Values.artemis.autoscaler.metrics.usersPerInstance }}
+  {{- end }}
+  {{- range .Values.artemis.autoscaler.metrics.externalMetrics }}
+  - type: External
+    external:
+      metric:
+        name: {{ .name }}
+        selector:
+          matchLabels:
+            {{- toYaml .labels | nindent 12 }}
+      target:
+        type: AverageValue
+        averageValue: {{ .targetValue }}
   {{- end }}
 {{- end }}

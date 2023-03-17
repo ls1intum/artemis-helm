@@ -4,6 +4,10 @@ metadata:
   name: {{ include "artemis.fullname" . }}
   labels:
     {{- include "artemis.labels" . | nindent 4 }}
+  {{- with .Values.artemis.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.artemis.service.type }}
   ports:
