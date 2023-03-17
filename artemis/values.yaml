@@ -86,6 +86,7 @@ application:
 # Configuration for the artemis application server pods 
 artemis:
   # Currently we only support 1 replica of artemis. This will change in the future
+  # Note that this value is ignored if the horizontal pod autoscaler is used
   replicaCount: 0
 
   image:
