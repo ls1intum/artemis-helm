@@ -50,14 +50,16 @@ spec:
                 port:
                   number: {{ $svcPort }}
           {{- end }}
-          {{- range $.Values.artemis.profileDeployments }}
-          - path: {{ .apiPath }}
+          {{- range $profileDeploymentKey, $profileDeploymentValue := $.Values.artemis.profileDeployments }}
+          {{- range $profileDeploymentValue.apiPaths }}
+          - path: {{ . }}
             pathType: "ImplementationSpecific"
             backend:
               service:
-                name: "{{ $fullName }}-{{ .profile }}"
+                name: "{{ $fullName }}-{{ $profileDeploymentValue.profile }}"
                 port:
                   number: {{ $svcPort }}
+          {{- end }}
           {{- end }}
     {{- end }}
 {{- end }}
