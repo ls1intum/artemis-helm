@@ -53,7 +53,7 @@ spec:
           {{- range $profileDeploymentKey, $profileDeploymentValue := $.Values.artemis.profileDeployments }}
           {{- range $profileDeploymentValue.apiPaths }}
           - path: {{ . }}
-            pathType: "ImplementationSpecific"
+            pathType: "Prefix"
             backend:
               service:
                 name: "{{ $fullName }}-{{ $profileDeploymentValue.profile }}"
