@@ -16,6 +16,8 @@ data:
 
           <journal-pool-files>10</journal-pool-files>
 
+          <max-disk-usage>100</max-disk-usage>
+
           <acceptors>
             <!-- Acceptor for every supported protocol -->
             <acceptor name="artemis">tcp://0.0.0.0:61616?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;amqpMinLargeMessageSize=102400;protocols=CORE,AMQP,STOMP,HORNETQ,MQTT,OPENWIRE;useEpoll=true;amqpCredits=1000;amqpLowCredits=300;amqpDuplicateDetection=true</acceptor>
