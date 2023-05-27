@@ -39,7 +39,8 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             - name: SPRING_PROFILES_ACTIVE
-              value: scheduling,{{ include "artemis.springprofiles" .}}
+              # TODO: Remove cypress (only here because of http issue)
+              value: cypress,scheduling,{{ include "artemis.springprofiles" .}}
           envFrom:
             - configMapRef:
                 name: artemis-usermanagement-configmap
