@@ -19,4 +19,5 @@ spec:
   selector:
     {{- include "artemis.selectorLabels" $ | nindent 4 }}
     profile: "{{.profile}}"
+---
 {{end}}
