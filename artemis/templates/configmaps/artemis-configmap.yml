@@ -13,6 +13,9 @@ data:
   eureka.instance.instanceId: "${HOSTNAME}"
   spring.hazelcast.interface: "${MY_POD_IP}"
   spring.websocket.broker.addresses: "{{ .Values.broker.service.name }}:{{ .Values.broker.service.port }}"
+  spring.artemis.mode: "native"
+  spring.artemis.broker-url: "tcp://{{ .Values.broker.service.name }}:61616"
+  logging.level.reactor.netty.transport.TransportConnector: "DEBUG"
   {{- with (first .Values.artemis.ingress.hosts) }}
   server.url: https://{{ .host }}
   {{- end }}
