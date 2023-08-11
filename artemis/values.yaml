@@ -1,7 +1,7 @@
 # Default values for artemis.
 
-# Sepcify the Artemis verion 
-# This value is used as docker image tag, so also "pr-1234" is a valid value here. 
+# Specify the Artemis version
+# This value is used as docker image tag, so also "pr-1234" is a valid value here.
 # See https://github.com/ls1intum/Artemis/pkgs/container/artemis/versions
 artemisVersion: "5.5.7"
 
@@ -115,7 +115,7 @@ artemis:
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:
-      - host: example.com 
+      - host: artemis.example
         paths:
           - path: /
             pathType: ImplementationSpecific
