@@ -35,3 +35,12 @@ maintainers:
 
 icon: "https://github.com/ls1intum/Artemis/blob/develop/src/main/resources/public/images/logo.png"
 
+dependencies:
+  - name: prometheus-adapter
+    repository: https://prometheus-community.github.io/helm-charts
+    version: 3.4.1
+    condition: artemis.autoscaler.customPrometheus
+  - name: prometheus
+    repository: https://prometheus-community.github.io/helm-charts
+    version: 15.18.0
+    condition: artemis.autoscaler.customPrometheus

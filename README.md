@@ -107,7 +107,7 @@ This is a non exhaustive list! Feel free to contribute to this chart by implemen
 - [ ] Security Contexts for all Deployments
   - [ ] Artemis
 - [ ] Implement Autoscalers for all Deployments
-  - [ ] Artemis
+  - [x] Artemis
 - [ ] Network Policies for all pods
   - [ ] Artemis
 
