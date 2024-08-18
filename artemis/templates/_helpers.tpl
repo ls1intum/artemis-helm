@@ -76,7 +76,7 @@ prod,artemis,decoupling
 {{- if .Values.application.versioncontrol.provider -}}
 ,{{ .Values.application.versioncontrol.provider }}
 {{- end }}
-{{- if .Values.application.continuousIntegration.provider -}}
-,{{ .Values.application.continuousIntegration.provider }}
+{{- if .Values.application.continuousintegration.provider -}}
+,{{ .Values.application.continuousintegration.provider }}
 {{- end }}
 {{- end }}

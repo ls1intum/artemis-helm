@@ -50,6 +50,10 @@ spec:
         - name: activemq-broker-configmap
           mountPath: /tmp/broker.xml
           subPath: broker.xml
+
+        resources:
+          {{- toYaml .Values.broker.resources | nindent 12 }}
+
       volumes:
       - name: activemq-broker-configmap
         configMap:
