@@ -61,10 +61,6 @@
             - secretRef:
                 name: artemis-usermanagement-secrets
             - secretRef:
-                name: artemis-vcs-secrets
-            - secretRef:
-                name: artemis-ci-secrets
-            - secretRef:
                 name: artemis-secrets
           ports:
             - name: http

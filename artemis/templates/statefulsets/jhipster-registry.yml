@@ -42,6 +42,8 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /central-config
+          resources:
+            {{- toYaml .Values.registry.resources | nindent 12 }}
       volumes:
         - name: config-volume
           configMap:

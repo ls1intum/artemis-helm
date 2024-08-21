@@ -3,7 +3,7 @@
 # Specify the Artemis version
 # This value is used as docker image tag, so also "pr-1234" is a valid value here.
 # See https://github.com/ls1intum/Artemis/pkgs/container/artemis/versions
-artemisVersion: "5.5.7"
+artemisVersion: "7.5.0"
 
 
 # Application specific configuration 
@@ -15,19 +15,10 @@ application:
       username: 
       password:
    
-    # Set true if external user management shoule be enabled
+    # Set true if external user management should be enabled
     useExternal: false
 
-    # Configure the user management provider. Valid values are "" and "jira"
     provider: ""
-
-    jira: 
-      url: ""
-      username: ""
-      password: ""
-
-      # The specified Jira group will have administrator access to Artemis
-      adminGroupName: ""
 
     # the whole section is optional: whether user details (such as the registration number) can be obtained from a LDAP service
     ldap:
@@ -39,38 +30,29 @@ application:
       allowedUsernamePattern: ''
       # allowedUsernamePattern: '^([a-z]{2}\d{2}[a-z]{3})$'zs # example for a TUM identifier, e.g. ab12cde
 
-  versioncontrol: 
+  # Local Version Control configuration
+  versioncontrol:
+    provider: "localvc"
+    url: ""
+    local_vcs_repo_path: /artemisdata/vcs/repo
+    ssh_key_path: /artemisdata/artemisdata/ssh-keys
+    build_agent_git_credentials:
+      user: "artemis-icl-build-agent"
+      password: ""
 
-    # Configure version control provider. Valid values are "" and "bitbucket"
-    provider: ""
 
-    defaultBranch: main 
+  # Local Continuous Integration configuration
+  continuousintegration:
+    provider: "localci"
+    artemis_authentication_token_value: "demo" # FIXME: Set secure auth token
+    specify_concurrent_builds: true
+    concurrent_build_size: 3
+    specify_thread_pool_size: false
+    image_cleanup:
+      enabled: true
+      expiry_days: 7
+      cleanup_schedule_time: "0 0 3 * * *"
 
-    # Bitbucket is only supported in conjungtion with jira usermanagement 
-    bitbucket: 
-      url: 
-
-      # SSH clone url - Make sure that this url ends with a /
-      sshCloneUrl: 
-
-      # Artemis user access token in Bitbucket
-      token: 
-
-  continuousIntegration: 
-
-    # Configure CI provider. Valid values are "" and "bamboo"
-    provider: ""
-
-    # Bamboo is only supported in conjungtion with jira usermanagement 
-    bamboo: 
-      url:
-
-      # Access token for the Artemis bamboo user 
-      accessToken: 
-
-      # Token used by the Artemis Bamboo plugin to send results to Artemis 
-      notificationToken: 
-      applicationLinkName: 
       
   # Configuration of the jHipster Registry
   registry: 
@@ -132,8 +114,13 @@ artemis:
     storageClassName: ""
     mountPath: "/artemisdata"
 
-
-  resources: {}
+  resources:
+    requests:
+      memory: "2560Mi"
+      cpu: "1000m"
+    limits:
+      memory: "5120Mi"
+      cpu: "2000m"
 
   nodeSelector: {}
 
@@ -175,6 +162,14 @@ database:
     size: 3Gi
     storageClassName: ""
 
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "1000m"
+    limits:
+      memory: "1024Mi"
+      cpu: "2000m"
+
 registry:
   replicaCount: 1
 
@@ -182,7 +177,7 @@ registry:
     # Leave empty to use the official image
     repository: ""
     name: "jhipster/jhipster-registry"
-    version: "v7.3.0"
+    version: "v7.4.0"
     pullPolicy: Always
 
       #podAnnotations: {}
@@ -191,6 +186,14 @@ registry:
     name: jhipster-registry-service
     type: ClusterIP
     port: 8761
+
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "1000m"
+    limits:
+      memory: "1024Mi"
+      cpu: "2000m"
 
 broker: 
   image: 
@@ -204,6 +207,13 @@ broker:
     type: ClusterIP
     port: 61616
 
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "1000m"
+    limits:
+      memory: "1024Mi"
+      cpu: "2000m"
 
 # Prometheus server & adapter for horizontal autoscaling
 prometheus:

@@ -24,3 +24,4 @@ data:
   management.metrics.export.prometheus.enabled: "true"
   spring.prometheus.monitoringIp: {{ .Values.artemis.autoscaler.monitoringIp }}
   {{- end }}
+  jhipster.security.authentication.jwt.base64-secret: {{ required "Registry JWT is required!" .Values.application.registry.jwt | b64enc | quote }}

@@ -3,7 +3,8 @@ kind: ConfigMap
 metadata:
   name: artemis-vcs-configmap
 data:
-  {{- if eq .Values.application.versioncontrol.provider "bitbucket" }}
-  artemis.version-control.url: {{ required "Bitbucket url is required" .Values.application.versioncontrol.bitbucket.url | quote }}
-  artemis.version-control.ssh-template-clone-url: {{ .Values.application.versioncontrol.bitbucket.sshCloneUrl | quote }}
-  {{- end }}
+  artemis.version-control.url: {{ .Values.application.versioncontrol.url | quote }}
+  artemis.version-control.local-vcs-repo-path: {{ .Values.application.versioncontrol.local_vcs_repo_path | quote }}
+  artemis.version-control.ssh_key_path: {{ .Values.application.versioncontrol.ssh_key_path | quote }}
+  artemis.version-control.build-agent-git-username: {{ .Values.application.versioncontrol.build_agent_git_credentials.user | quote }}
+  artemis.version-control.build-agent-git-password: {{ .Values.application.versioncontrol.build_agent_git_credentials.password | quote }}

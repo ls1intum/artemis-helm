@@ -38,7 +38,8 @@ spec:
         - containerPort: 3306
           name: 3306tcp2
           protocol: TCP
-        resources: {}
+        resources:
+          {{- toYaml .Values.database.resources | nindent 12 }}
         securityContext:
           allowPrivilegeEscalation: false
           privileged: false
